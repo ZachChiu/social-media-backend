@@ -1,11 +1,25 @@
 const Post = require("../models/postsModel");
+const User = require("../models/usersModel");
 const successHandle = require("../server/successHandle");
 const errorHandle = require("../server/errorHandle");
 const _ = require("lodash");
 
 const postController = {
-  async getPosts(res) {
-    const posts = await Post.find();
+  async getPosts(req, res) {
+    const timeSort =
+      req?.query?.timeSort === "asc" ? "createdAt" : "-createdAt";
+
+    const findBySearchContent =
+      req?.query?.content != null
+        ? { content: new RegExp(req?.query?.content) }
+        : {};
+
+    const posts = await Post.find(findBySearchContent)
+      .populate({
+        path: "user",
+        select: "name photo",
+      })
+      .sort(timeSort);
     successHandle(res, posts);
   },
   async getPost(req, res) {
@@ -23,11 +37,15 @@ const postController = {
   },
   async createPost(req, res) {
     try {
-      const { name, content } = req?.body;
-      if (!name || !content) {
+      const { user, content, image } = req?.body;
+      if (!user || !content) {
         errorHandle(res, "欄位未正確填寫");
       } else {
-        const post = await Post.create({ name, content });
+        const createData = { user, content };
+        if (image) {
+          createData.image = image;
+        }
+        const post = await Post.create(createData);
         successHandle(res, post);
       }
     } catch (error) {

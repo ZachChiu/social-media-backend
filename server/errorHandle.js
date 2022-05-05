@@ -1,5 +1,5 @@
 const errorHandle = (res, message) => {
-  res.status(404).json({
+  res.status(400).json({
     status: "fail",
     message,
   });

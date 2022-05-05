@@ -3,7 +3,7 @@ var router = express.Router();
 const PostsController = require("../controllers/postsController");
 
 router.get("/", async function (req, res, next) {
-  PostsController.getPosts(res);
+  PostsController.getPosts(req, res);
 });
 
 router.get("/:id", async function (req, res, next) {
