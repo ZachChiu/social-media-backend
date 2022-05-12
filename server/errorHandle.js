@@ -1,8 +1,9 @@
-const errorHandle = (res, message) => {
-  res.status(400).json({
-    status: "fail",
-    message,
-  });
+const errorHandle = (httpStatus, errMessage, next) => {
+  const error = new Error(errMessage);
+  error.status = httpStatus;
+  error.isOperational = true;
+
+  next(error);
 };
 
 module.exports = errorHandle;

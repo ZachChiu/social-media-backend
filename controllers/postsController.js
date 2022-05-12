@@ -2,10 +2,12 @@ const Post = require("../models/postsModel");
 const User = require("../models/usersModel");
 const successHandle = require("../server/successHandle");
 const errorHandle = require("../server/errorHandle");
+const handleErrorAsync = require("../server/handleErrorAsync");
+
 const _ = require("lodash");
 
 const postController = {
-  async getPosts(req, res) {
+  getPosts: handleErrorAsync(async (req, res, next) => {
     const timeSort =
       req?.query?.timeSort === "asc" ? "createdAt" : "-createdAt";
 
@@ -21,86 +23,73 @@ const postController = {
       })
       .sort(timeSort);
     successHandle(res, posts);
-  },
-  async getPost(req, res) {
-    try {
-      const id = req?.params?.id;
-      const post = await Post.findById(id);
-      if (id == null || post == null) {
-        errorHandle(res, "id 有誤");
+  }),
+
+  getPost: handleErrorAsync(async (req, res, next) => {
+    const id = req?.params?.id;
+
+    if (id == null) {
+      return next(errorHandle(400, "id 有誤", next));
+    }
+    Post.findById(id, function (err, post) {
+      if (err) {
+        return next(errorHandle(400, "id 有誤", next));
       } else {
         successHandle(res, post);
       }
-    } catch (error) {
-      errorHandle(res, error.message);
-    }
-  },
-  async createPost(req, res) {
-    try {
-      const { user, content, image } = req?.body;
-      if (!user || !content) {
-        errorHandle(res, "欄位未正確填寫");
-      } else {
-        const createData = { user, content };
-        if (image) {
-          createData.image = image;
-        }
-        const post = await Post.create(createData);
-        successHandle(res, post);
+    });
+  }),
+
+  createPost: handleErrorAsync(async (req, res, next) => {
+    const { user, content, image } = req?.body;
+    if (!user || !content) {
+      return next(errorHandle(400, "欄位未正確填寫", next));
+    } else {
+      const createData = { user, content };
+      if (image) {
+        createData.image = image;
       }
-    } catch (error) {
-      errorHandle(res, error.message);
+      const post = await Post.create(createData);
+      successHandle(res, post);
     }
-  },
+  }),
 
-  async deletePosts(res) {
-    try {
-      await Post.deleteMany({});
-      successHandle(res, []);
-    } catch (error) {
-      errorHandle(res, "刪除失敗");
+  deletePosts: handleErrorAsync(async (req, res, next) => {
+    await Post.deleteMany({});
+    successHandle(res, []);
+  }),
+
+  deletePost: handleErrorAsync(async (req, res, next) => {
+    const id = req?.params?.id;
+    const post = await Post.findByIdAndDelete(id);
+
+    if (id == null || post == null) {
+      return next(errorHandle(400, "id 有誤", next));
+    } else {
+      successHandle(res, {});
     }
-  },
+  }),
 
-  async deletePost(req, res) {
-    try {
-      const id = req?.params?.id;
-      const post = await Post.findByIdAndDelete(id);
+  updatePost: handleErrorAsync(async (req, res, next) => {
+    const id = req?.params?.id;
+    const { name, content } = req?.body;
+    const originPost = await Post.findById(id);
 
-      if (id == null || post == null) {
-        errorHandle(res, "id 有誤");
-      } else {
-        successHandle(res, {});
-      }
-    } catch (error) {
-      errorHandle(res, "刪除失敗");
+    if (id == null || originPost == null) {
+      return next(errorHandle(400, "id 有誤", next));
+    } else if (!name || !content) {
+      return next(errorHandle(400, "欄位未正確填寫", next));
+    } else {
+      const differentData = _.omitBy(
+        { name, content },
+        (value, key) => originPost[key] === value
+      );
+      const post = await Post.findByIdAndUpdate(id, differentData, {
+        new: true,
+      });
+      successHandle(res, post);
     }
-  },
-
-  async updatePost(req, res) {
-    try {
-      const id = req?.params?.id;
-      const { name, content } = req?.body;
-      const originPost = await Post.findById(id);
-
-      if (id == null || originPost == null) {
-        errorHandle(res, "id 有誤");
-      } else if (!name || !content) {
-        errorHandle(res, "欄位有誤");
-      } else {
-        const differentData = _.omitBy(
-          { name, content },
-          (value, key) => originPost[key] === value
-        );
-        const post = await Post.findByIdAndUpdate(id, differentData, {
-          new: true,
-        });
-        successHandle(res, post);
-      }
-    } catch (error) {
-      errorHandle(res, "更新失敗");
-    }
-  },
+  }),
 };
 
 module.exports = postController;
