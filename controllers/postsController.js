@@ -44,14 +44,16 @@ const postController = {
     const { user, content, image } = req?.body;
     if (!user || !content) {
       return next(errorHandle(400, "欄位未正確填寫", next));
-    } else {
-      const createData = { user, content };
-      if (image) {
-        createData.image = image;
-      }
-      const post = await Post.create(createData);
-      successHandle(res, post);
     }
+    Post.findById(user, async function (err, post) {
+      if (err) {
+        return next(errorHandle(400, "使用者 id 有誤", next));
+      } else {
+        const createData = { user, content, image };
+        const post = await Post.create(createData);
+        successHandle(res, post);
+      }
+    });
   }),
 
   deletePosts: handleErrorAsync(async (req, res, next) => {
@@ -61,34 +63,43 @@ const postController = {
 
   deletePost: handleErrorAsync(async (req, res, next) => {
     const id = req?.params?.id;
-    const post = await Post.findByIdAndDelete(id);
-
-    if (id == null || post == null) {
+    if (id == null) {
       return next(errorHandle(400, "id 有誤", next));
-    } else {
-      successHandle(res, {});
     }
+
+    Post.findByIdAndDelete(id, function (err, post) {
+      if (err) {
+        return next(errorHandle(400, "id 有誤", next));
+      } else {
+        successHandle(res, post);
+      }
+    });
   }),
 
   updatePost: handleErrorAsync(async (req, res, next) => {
     const id = req?.params?.id;
-    const { name, content } = req?.body;
-    const originPost = await Post.findById(id);
+    const { content, image } = req?.body;
 
-    if (id == null || originPost == null) {
+    if (id == null) {
       return next(errorHandle(400, "id 有誤", next));
-    } else if (!name || !content) {
-      return next(errorHandle(400, "欄位未正確填寫", next));
-    } else {
-      const differentData = _.omitBy(
-        { name, content },
-        (value, key) => originPost[key] === value
-      );
-      const post = await Post.findByIdAndUpdate(id, differentData, {
-        new: true,
-      });
-      successHandle(res, post);
     }
+
+    if (!content) {
+      return next(errorHandle(400, "欄位未正確填寫", next));
+    }
+
+    Post.findById(id, async function (err, originPost) {
+      if (err) {
+        return next(errorHandle(400, "id 有誤", next));
+      } else {
+        const differentData = { content, image };
+        _.omitBy({ content }, (value, key) => originPost[key] === value);
+        const post = await Post.findByIdAndUpdate(id, differentData, {
+          new: true,
+        });
+        successHandle(res, post);
+      }
+    });
   }),
 };
 
