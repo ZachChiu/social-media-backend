@@ -77,6 +77,10 @@ const userController = {
 
     generateJWT(newUser, res);
   }),
+
+  getProfile: handleErrorAsync(async (req, res, next) => {
+    successHandle(res, req.user);
+  }),
 };
 
 module.exports = userController;
