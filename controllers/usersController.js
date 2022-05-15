@@ -2,20 +2,11 @@ const Users = require("../models/usersModel");
 const successHandle = require("../server/successHandle");
 const errorHandle = require("../server/errorHandle");
 const handleErrorAsync = require("../server/handleErrorAsync");
+const { generateJWT } = require("../server/auth");
+
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-
 const _ = require("lodash");
-
-const generateJWT = (user, res) => {
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_DAY,
-  });
-
-  const userData = { jwt: token, name: user.name };
-  successHandle(res, userData, 201);
-};
 
 const userController = {
   signIn: handleErrorAsync(async (req, res, next) => {
@@ -29,15 +20,11 @@ const userController = {
     }
 
     const user = await Users.findOne({ email }).select("+password");
-
     if (user == null) {
       return next(errorHandle(400, "此帳號尚未註冊", next));
     }
 
-    console.log(password, user.password);
     const auth = await bcrypt.compare(password, user.password);
-
-    console.log(auth);
     if (!auth) {
       return next(errorHandle(400, "密碼錯誤", next));
     }
@@ -45,9 +32,9 @@ const userController = {
     generateJWT(user, res);
   }),
   signUp: handleErrorAsync(async (req, res, next) => {
-    let { name, email, password, confirmPassword } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
 
-    // 補上找重複 EMAIL、密碼大小寫都要
+    // todo 補上找重複 EMAIL、密碼大小寫都要
     if (!name || !email || !password || !confirmPassword) {
       return next(errorHandle(400, "欄位未正確填寫", next));
     }
@@ -68,11 +55,11 @@ const userController = {
       return next(errorHandle(400, "密碼不得少於八碼", next));
     }
 
-    password = await bcrypt.hash(req.body.password, 12);
+    const encryptionPassword = await bcrypt.hash(password, 12);
     const newUser = await Users.create({
       name,
       email,
-      password: password,
+      password: encryptionPassword,
     });
 
     generateJWT(newUser, res);
@@ -80,6 +67,37 @@ const userController = {
 
   getProfile: handleErrorAsync(async (req, res, next) => {
     successHandle(res, req.user);
+  }),
+
+  updatePassword: handleErrorAsync(async (req, res, next) => {
+    const { password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+      return next(errorHandle(400, "密碼不一致", next));
+    }
+
+    if (
+      !validator.isLength(password, {
+        min: 8,
+      })
+    ) {
+      return next(errorHandle(400, "密碼不得少於八碼", next));
+    }
+
+    const encryptionPassword = await bcrypt.hash(password, 12);
+    const id = req.user.id;
+    Users.findByIdAndUpdate(
+      id,
+      { password: encryptionPassword },
+      function (err, user) {
+        if (err) {
+          console.log(err);
+          return next(errorHandle(400, "更改密碼失敗", next));
+        } else {
+          generateJWT(user, res);
+        }
+      }
+    );
   }),
 };
 

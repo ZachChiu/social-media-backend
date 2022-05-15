@@ -1,7 +1,18 @@
 const Users = require("../models/usersModel");
-const handleErrorAsync = require("../server/handleErrorAsync");
-const errorHandle = require("../server/errorHandle");
+const handleErrorAsync = require("./handleErrorAsync");
+const successHandle = require("./successHandle");
+
+const errorHandle = require("./errorHandle");
 const jwt = require("jsonwebtoken");
+
+const generateJWT = (user, res) => {
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_DAY,
+  });
+
+  const userData = { jwt: token, name: user.name };
+  successHandle(res, userData, 201);
+};
 
 const isAuth = handleErrorAsync(async (req, res, next) => {
   let token = req?.headers.authorization?.startsWith("Bearer")
@@ -26,4 +37,4 @@ const isAuth = handleErrorAsync(async (req, res, next) => {
   next();
 });
 
-module.exports = isAuth;
+module.exports = { generateJWT, isAuth };
