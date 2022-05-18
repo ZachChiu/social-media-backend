@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "14f0f8e3-4286-4a21-a291-8430f9a8fb8d",
+		"name": "MetaWall",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts 貼文",
+			"item": [
+				{
+					"name": "取得所有貼文",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/posts?timeSort=desc",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "timeSort",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得單一貼文",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/posts/1123",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts",
+								"1123"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "創建貼文",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": \"6272c65c97a24be38952ab6f\",\r\n    \"content\": \"可愛貓貓111\",\r\n    \"image\": 'https://lh3.googleusercontent.com/DQj-gonAVTlhj5W7_DhBVmX-0P42rfvx8TSp1WfQeZ6iFIon6InIS8M4Nbqy7Ql5ahgEXSiRDiWD88v-bcPYIEAg3Q=w640-h400-e365-rj-sc0x00ffffff'\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/posts",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除單一貼文",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/posts/626ac81075978db10c13b03e",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts",
+								"626ac81075978db10c13b03e"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除所有貼文",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/posts",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新單一貼文",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"1111111\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/posts/626ac81075978db10c13b03e",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"posts",
+								"626ac81075978db10c13b03e"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User 使用者",
+			"item": [
+				{
+					"name": "登入",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"joyce123@gmail.com\",\r\n    \"password\": \"qsc95164\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/users/sign_in",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"sign_in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "註冊",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"joyce\",\r\n    \"email\": \"joyce5@gmail.com\",\r\n    \"password\" : \"asdfg123Q\",\r\n    \"confirmPassword\": \"asdfg123Q\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/users/sign_up",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"sign_up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更改密碼",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYxNDE2NiwiZXhwIjoxNjUzMjE4OTY2fQ.C606Hdoof25IzLi4cEYpdmIqZlGkuZnTlAWo6TKvxLQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"confirmPassword\": \"qsc95164\",\r\n    \"password\": \"qsc95164\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/users/updatePassword",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人資料",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"joyce@gmail.com\",\r\n    \"password\": \"qsc95164\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/users/profile",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新個人資料",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"1111\",\r\n    \"sex\": \"male\",\r\n    \"photo\": \"https://i.epochtimes.com/assets/uploads/2021/08/id13156667-shutterstock_376153318-450x322.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://meta-wall.herokuapp.com/users/updateProfile",
+							"protocol": "https",
+							"host": [
+								"meta-wall",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
