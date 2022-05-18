@@ -34,9 +34,13 @@ const userController = {
   signUp: handleErrorAsync(async (req, res, next) => {
     const { name, email, password, confirmPassword } = req.body;
 
-    // todo 補上找重複 EMAIL、密碼大小寫都要
     if (!name || !email || !password || !confirmPassword) {
       return next(errorHandle(400, "欄位未正確填寫", next));
+    }
+
+    const sameUser = await Users.findOne({ email }).select("+email");
+    if (sameUser) {
+      return next(errorHandle(400, "此帳號已被註冊", next));
     }
 
     if (!validator.isEmail(email)) {
@@ -48,11 +52,15 @@ const userController = {
     }
 
     if (
-      !validator.isLength(password, {
-        min: 8,
+      !validator.isStrongPassword(password, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 0,
       })
     ) {
-      return next(errorHandle(400, "密碼不得少於八碼", next));
+      return next(errorHandle(400, "密碼格式錯誤", next));
     }
 
     const encryptionPassword = await bcrypt.hash(password, 12);
@@ -91,10 +99,42 @@ const userController = {
       { password: encryptionPassword },
       function (err, user) {
         if (err) {
-          console.log(err);
           return next(errorHandle(400, "更改密碼失敗", next));
         } else {
           generateJWT(user, res);
+        }
+      }
+    );
+  }),
+
+  updateProfile: handleErrorAsync(async (req, res, next) => {
+    console.log(req.user);
+    const { name, sex, photo } = req.body;
+
+    if (!name || !sex) {
+      return next(errorHandle(400, "欄位未正確填寫", next));
+    }
+
+    if (!["male", "female", "none"].includes(sex)) {
+      return next(errorHandle(400, "性別填寫錯誤", next));
+    }
+
+    const updateData = {
+      name,
+      sex,
+      photo,
+    };
+
+    const id = req.user.id;
+    Users.findByIdAndUpdate(
+      id,
+      updateData,
+      { new: true },
+      function (err, user) {
+        if (err) {
+          return next(errorHandle(400, "更新使用者資訊失敗", next));
+        } else {
+          successHandle(res, user);
         }
       }
     );

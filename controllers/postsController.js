@@ -32,7 +32,7 @@ const postController = {
       return next(errorHandle(400, "id 有誤", next));
     }
     Post.findById(id, function (err, post) {
-      if (err) {
+      if (err || post == null) {
         return next(errorHandle(400, "id 有誤", next));
       } else {
         successHandle(res, post);
