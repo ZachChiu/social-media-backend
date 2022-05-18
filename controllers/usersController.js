@@ -85,11 +85,15 @@ const userController = {
     }
 
     if (
-      !validator.isLength(password, {
-        min: 8,
+      !validator.isStrongPassword(password, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 0,
       })
     ) {
-      return next(errorHandle(400, "密碼不得少於八碼", next));
+      return next(errorHandle(400, "密碼格式錯誤", next));
     }
 
     const encryptionPassword = await bcrypt.hash(password, 12);
