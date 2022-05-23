@@ -41,16 +41,17 @@ const postController = {
   }),
 
   createPost: handleErrorAsync(async (req, res, next) => {
-    const { user, content, image } = req?.body;
-    if (!user || !content) {
+    const { content, image } = req?.body;
+    const user = req.user.id;
+    if (!content) {
       return next(errorHandle(400, "欄位未正確填寫", next));
     }
-    Post.findById(user, async function (err, post) {
+
+    const createData = { user, content, image };
+    await Post.create(createData, function (err, post) {
       if (err) {
-        return next(errorHandle(400, "使用者 id 有誤", next));
+        return next(errorHandle(400, "建立失敗", next));
       } else {
-        const createData = { user, content, image };
-        const post = await Post.create(createData);
         successHandle(res, post);
       }
     });
