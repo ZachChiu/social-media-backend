@@ -109,6 +109,76 @@ const postController = {
       }
     ).clone();
   }),
+
+  likePost: handleErrorAsync(async (req, res, next) => {
+    const user = req?.user?.id;
+    const id = req?.params?.id;
+
+    await Post.findByIdAndUpdate(
+      id,
+      { $addToSet: { likes: user } },
+      { new: true },
+      function (err, post) {
+        if (err) {
+          return next(errorHandle(400, "按讚失敗", next));
+        } else {
+          successHandle(res, post, 201);
+        }
+      }
+    ).clone();
+  }),
+
+  unlikePost: handleErrorAsync(async (req, res, next) => {
+    const user = req?.user?.id;
+    const id = req?.params?.id;
+
+    await Post.findByIdAndUpdate(
+      id,
+      { $pull: { likes: user } },
+      { new: true },
+      function (err, post) {
+        if (err) {
+          return next(errorHandle(400, "取消按讚失敗", next));
+        } else {
+          successHandle(res, post, 201);
+        }
+      }
+    ).clone();
+  }),
+
+  getUserPosts: handleErrorAsync(async (req, res, next) => {
+    const userId = req?.params?.id;
+
+    await Post.find({ user: userId }, function (err, post) {
+      if (err || !post) {
+        return next(errorHandle(400, "id 有誤", next));
+      } else {
+        successHandle(res, post);
+      }
+    }).clone();
+  }),
+
+  getLikeList: handleErrorAsync(async (req, res, next) => {
+    const user = req?.user?.id;
+
+    await Post.find(
+      {
+        likes: { $in: [user] },
+      },
+      function (err, post) {
+        if (err) {
+          return next(errorHandle(400, "取得按讚列表失敗", next));
+        } else {
+          successHandle(res, post);
+        }
+      }
+    )
+      .populate({
+        path: "user",
+        select: "name",
+      })
+      .clone();
+  }),
 };
 
 module.exports = postController;
