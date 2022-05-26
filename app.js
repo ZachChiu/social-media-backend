@@ -27,11 +27,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/posts", postsRouter);
+app.use(postsRouter);
 app.use("/upload", uploadRouter);
 
 app.use(function (req, res, next) {
-  res.status(404).send("抱歉，您的頁面找不到");
+  res.status(404).json({ status: "fail", message: "抱歉，您的頁面找不到" });
 });
 
 // express 錯誤處理
