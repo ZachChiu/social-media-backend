@@ -1,8 +1,8 @@
 const Users = require("../models/usersModel");
-const successHandle = require("../server/successHandle");
-const errorHandle = require("../server/errorHandle");
-const handleErrorAsync = require("../server/handleErrorAsync");
-const { generateJWT } = require("../server/auth");
+const successHandle = require("../service/successHandle");
+const errorHandle = require("../service/errorHandle");
+const handleErrorAsync = require("../service/handleErrorAsync");
+const { generateJWT } = require("../service/auth");
 
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
@@ -51,6 +51,10 @@ const userController = {
       return next(errorHandle(400, "密碼不一致", next));
     }
 
+    if (!validator.isLength(name, { min: 2 })) {
+      return next(errorHandle(400, "暱稱至少 2 個字元以上", next));
+    }
+
     if (
       !validator.isStrongPassword(password, {
         minLength: 8,
@@ -60,7 +64,9 @@ const userController = {
         minSymbols: 0,
       })
     ) {
-      return next(errorHandle(400, "密碼格式錯誤", next));
+      return next(
+        errorHandle(400, "密碼需 8 碼以上，並由大小寫英文與數字混合而成", next)
+      );
     }
 
     const encryptionPassword = await bcrypt.hash(password, 12);
