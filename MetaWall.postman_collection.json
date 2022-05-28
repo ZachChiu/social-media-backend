@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "14f0f8e3-4286-4a21-a291-8430f9a8fb8d",
 		"name": "MetaWall",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12533103"
 	},
 	"item": [
 		{
@@ -15,17 +16,14 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/posts?timeSort=desc",
-							"protocol": "https",
+							"raw": "{{url}}/posts?timeSort=desc",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
 								"posts"
@@ -47,21 +45,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/posts/1123",
-							"protocol": "https",
+							"raw": "{{url}}/post/628fbee4829ea8e5c4961d25",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
-								"posts",
-								"1123"
+								"post",
+								"628fbee4829ea8e5c4961d25"
 							],
 							"query": [
 								{
@@ -81,13 +76,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user\": \"6272c65c97a24be38952ab6f\",\r\n    \"content\": \"可愛貓貓111\",\r\n    \"image\": 'https://lh3.googleusercontent.com/DQj-gonAVTlhj5W7_DhBVmX-0P42rfvx8TSp1WfQeZ6iFIon6InIS8M4Nbqy7Ql5ahgEXSiRDiWD88v-bcPYIEAg3Q=w640-h400-e365-rj-sc0x00ffffff'\r\n}",
+							"raw": "{\r\n    \"content\": \"124124124\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -95,15 +90,12 @@
 							}
 						},
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/posts",
-							"protocol": "https",
+							"raw": "{{url}}/post",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
-								"posts"
+								"post"
 							]
 						}
 					},
@@ -116,21 +108,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/posts/626ac81075978db10c13b03e",
-							"protocol": "https",
+							"raw": "{{url}}/post/628fbee4829ea8e5c4961d25",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
-								"posts",
-								"626ac81075978db10c13b03e"
+								"post",
+								"628fbee4829ea8e5c4961d25"
 							],
 							"query": [
 								{
@@ -149,12 +138,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/posts",
-							"protocol": "https",
+							"raw": "{{url}}/posts",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
 								"posts"
@@ -170,13 +156,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"content\": \"1111111\",\r\n}",
+							"raw": "{\r\n    \"content\": \"GOGOGO\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -184,16 +170,144 @@
 							}
 						},
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/posts/626ac81075978db10c13b03e",
-							"protocol": "https",
+							"raw": "{{url}}/post/628fc3edb4aac7feacf7a648",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"628fc3edb4aac7feacf7a648"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "按讚貼文",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"可愛貓貓111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post/628fc3edb4aac7feacf7a648/like",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"628fc3edb4aac7feacf7a648",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消按讚貼文",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"可愛貓貓111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post/628fc3edb4aac7feacf7a648/like",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"628fc3edb4aac7feacf7a648",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得單一使用者貼文列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/posts/user/628fc3edb4aac7feacf7a648",
+							"host": [
+								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"626ac81075978db10c13b03e"
+								"user",
+								"628fc3edb4aac7feacf7a648"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得按讚列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/posts/like_list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"like_list"
 							],
 							"query": [
 								{
@@ -226,12 +340,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/users/sign_in",
-							"protocol": "https",
+							"raw": "{{url}}/users/sign_in",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
 								"users",
@@ -256,12 +367,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/users/sign_up",
-							"protocol": "https",
+							"raw": "{{url}}/users/sign_up",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
 								"users",
@@ -278,7 +386,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYxNDE2NiwiZXhwIjoxNjUzMjE4OTY2fQ.C606Hdoof25IzLi4cEYpdmIqZlGkuZnTlAWo6TKvxLQ",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
@@ -292,12 +400,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/users/updatePassword",
-							"protocol": "https",
+							"raw": "{{url}}/users/updatePassword",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
 								"users",
@@ -317,13 +422,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"joyce@gmail.com\",\r\n    \"password\": \"qsc95164\"\r\n}",
+							"raw": "{\r\n    \"email\": \"joyce123@gmail.com\",\r\n    \"password\": \"qsc95164\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -353,7 +458,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkZTFjOGIxNjgxZGNhODU5NGJhNyIsImlhdCI6MTY1MjYwNDQwMSwiZXhwIjoxNjUzMjA5MjAxfQ.XZBIydQoYXOA6-PeMxNpWee3fx7RQ2ighlXPymFyEzc",
+								"value": "Bearer {{jwt}}",
 								"type": "text"
 							}
 						],
@@ -377,6 +482,44 @@
 							"path": [
 								"users",
 								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "upload 檔案",
+			"item": [
+				{
+					"name": "上傳圖片",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"type": "file",
+									"src": "/C:/Users/awdx8/Downloads/Photo/c3uhsgo1vx541.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/upload",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"upload"
 							]
 						}
 					},
