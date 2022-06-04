@@ -148,14 +148,29 @@ const postController = {
 
   getUserPosts: handleErrorAsync(async (req, res, next) => {
     const userId = req?.params?.id;
+    const timeSort =
+      req?.query?.timeSort === "asc" ? "createdAt" : "-createdAt";
+    const findBySearchContent =
+      req?.query?.content != null
+        ? { content: new RegExp(req?.query?.content) }
+        : {};
 
-    await Post.find({ user: userId }, function (err, post) {
-      if (err || !post) {
-        return next(errorHandle(400, "id 有誤", next));
-      } else {
-        successHandle(res, post);
+    await Post.find(
+      { $and: [{ user: userId }, findBySearchContent] },
+      function (err, post) {
+        if (err || !post) {
+          return next(errorHandle(400, "id 有誤", next));
+        } else {
+          successHandle(res, post);
+        }
       }
-    }).clone();
+    )
+      .sort(timeSort)
+      .populate({
+        path: "user",
+        select: "name photo",
+      })
+      .clone();
   }),
 
   getLikeList: handleErrorAsync(async (req, res, next) => {
