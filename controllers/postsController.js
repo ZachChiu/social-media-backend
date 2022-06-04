@@ -36,6 +36,9 @@ const postController = {
       } else {
         successHandle(res, post);
       }
+    }).populate({
+      path: "user",
+      select: "name photo",
     });
   }),
 

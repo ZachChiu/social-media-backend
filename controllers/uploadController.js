@@ -6,7 +6,8 @@ const sizeOf = require("image-size");
 
 const uploadController = {
   uploadImage: handleErrorAsync(async (req, res, next) => {
-    if (req.files.length === 0) {
+    const { image } = req.body;
+    if (!image) {
       return errorHandle(400, "未上傳檔案", next);
     }
 
@@ -20,13 +21,18 @@ const uploadController = {
       clientSecret: process.env.IMGUR_CLIENT_SECRET,
       refreshToken: process.env.IMGUR_REFRESH_TOKEN,
     });
+
     const response = await client.upload({
-      image: req.files[0].buffer.toString("base64"),
+      image,
       type: "base64",
       album: process.env.IMGUR_ALBUM_ID,
     });
-
-    successHandle(res, response.data.link);
+    console.log(response);
+    if (response.success) {
+      successHandle(res, response.data.link);
+    } else {
+      return errorHandle(400, "上傳檔案失敗", next);
+    }
   }),
 };
 
