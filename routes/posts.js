@@ -54,4 +54,13 @@ router.get("/posts/user/:id", isAuth, async function (req, res, next) {
   PostsController.getUserPosts(req, res, next);
 });
 
+router.post(
+  "/post/:id/comment",
+  isAuth,
+  checkPostId,
+  function (req, res, next) {
+    PostsController.postComment(req, res, next);
+  }
+);
+
 module.exports = router;

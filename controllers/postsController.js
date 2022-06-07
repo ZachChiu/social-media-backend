@@ -1,9 +1,11 @@
 const Post = require("../models/postsModel");
 const User = require("../models/usersModel");
+const Comment = require("../models/commentsModel");
 const successHandle = require("../service/successHandle");
 const errorHandle = require("../service/errorHandle");
 const handleErrorAsync = require("../service/handleErrorAsync");
 const _ = require("lodash");
+const validator = require("validator");
 
 const postController = {
   getPosts: handleErrorAsync(async (req, res, next) => {
@@ -19,6 +21,10 @@ const postController = {
       .populate({
         path: "user",
         select: "name photo",
+      })
+      .populate({
+        path: "comments",
+        select: "comment user",
       })
       .sort(timeSort);
     successHandle(res, posts);
@@ -193,9 +199,29 @@ const postController = {
     )
       .populate({
         path: "user",
-        select: "name",
+        select: "name photo",
       })
       .clone();
+  }),
+
+  postComment: handleErrorAsync(async (req, res, next) => {
+    const user = req.user.id;
+    const post = req.post.id;
+
+    const { comment } = req.body;
+    const inValid = validator.isEmpty(comment || "", {
+      ignore_whitespace: true,
+    });
+    if (!comment || inValid) {
+      return next(errorHandle(400, "欄位未正確填寫", next));
+    }
+    const result = await Comment.create({
+      user,
+      post,
+      comment,
+    });
+
+    successHandle(res, result);
   }),
 };
 

@@ -27,7 +27,7 @@ const uploadController = {
       type: "base64",
       album: process.env.IMGUR_ALBUM_ID,
     });
-    console.log(response);
+
     if (response.success) {
       successHandle(res, response.data.link);
     } else {
