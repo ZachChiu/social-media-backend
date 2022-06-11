@@ -118,7 +118,6 @@ const userController = {
   }),
 
   updateProfile: handleErrorAsync(async (req, res, next) => {
-    console.log(req.user);
     const { name, sex, photo } = req.body;
 
     if (!name || !sex) {
@@ -148,6 +147,74 @@ const userController = {
         }
       }
     );
+  }),
+
+  postFollow: handleErrorAsync(async (req, res, next) => {
+    const selfUser = req.user.id;
+    const followUser = req.params.id;
+
+    if (selfUser === followUser) {
+      return next(errorHandle(400, "無法追蹤自己", next));
+    }
+
+    await Users.updateOne(
+      {
+        _id: selfUser,
+        "following.user": { $ne: followUser },
+      },
+      {
+        $addToSet: {
+          following: { user: followUser },
+        },
+      }
+    );
+
+    await Users.updateOne(
+      {
+        _id: followUser,
+        "followers.user": { $ne: selfUser },
+      },
+      {
+        $addToSet: {
+          followers: { user: selfUser },
+        },
+      }
+    );
+
+    successHandle(res, "success");
+  }),
+
+  deleteFollow: handleErrorAsync(async (req, res, next) => {
+    const selfUser = req.user.id;
+    const followUser = req.params.id;
+
+    if (selfUser === followUser) {
+      return next(errorHandle(400, "無法取消追蹤自己", next));
+    }
+
+    await Users.updateOne(
+      {
+        _id: selfUser,
+      },
+      {
+        $pull: {
+          following: { user: followUser },
+        },
+      }
+    );
+
+    await Users.updateOne(
+      {
+        _id: followUser,
+      },
+      {
+        $pull: {
+          followers: { user: selfUser },
+        },
+      }
+    );
+
+    successHandle(res, "success");
   }),
 };
 

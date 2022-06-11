@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const usersController = require("../controllers/usersController");
 const { isAuth } = require("../service/auth");
+const { checkUserId } = require("../service/checkId");
 
 router.post("/sign_in", function (req, res, next) {
   usersController.signIn(req, res, next);
@@ -21,6 +22,14 @@ router.post("/updatePassword", isAuth, function (req, res, next) {
 
 router.patch("/updateProfile", isAuth, function (req, res, next) {
   usersController.updateProfile(req, res, next);
+});
+
+router.post("/:id/follow", isAuth, checkUserId, function (req, res, next) {
+  usersController.postFollow(req, res, next);
+});
+
+router.delete("/:id/follow", isAuth, checkUserId, function (req, res, next) {
+  usersController.deleteFollow(req, res, next);
 });
 
 module.exports = router;

@@ -319,6 +319,40 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "創建留言",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"     \"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post/629c886e4db54c0eb166a7c1/comment",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"629c886e4db54c0eb166a7c1",
+								"comment"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -436,12 +470,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/users/profile",
-							"protocol": "https",
+							"raw": "{{url}}/users/profile",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
 								"users",
@@ -472,16 +503,63 @@
 							}
 						},
 						"url": {
-							"raw": "https://meta-wall.herokuapp.com/users/updateProfile",
-							"protocol": "https",
+							"raw": "{{url}}/users/updateProfile",
 							"host": [
-								"meta-wall",
-								"herokuapp",
-								"com"
+								"{{url}}"
 							],
 							"path": [
 								"users",
 								"updateProfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "追蹤",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/628b9bb756aedbe7aa0dce84/follow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"628b9bb756aedbe7aa0dce84",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消追蹤",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/628b9bb756aedbe7aa0dce84/follow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"628b9bb756aedbe7aa0dce84",
+								"follow"
 							]
 						}
 					},
@@ -504,14 +582,13 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "",
-									"type": "file",
-									"src": "/C:/Users/awdx8/Downloads/Photo/c3uhsgo1vx541.jpg"
+							"mode": "raw",
+							"raw": "{\r\n    \"image\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{url}}/upload",

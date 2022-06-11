@@ -27,6 +27,34 @@ const userSchema = new mongoose.Schema(
     photo: {
       type: String,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    followers: [
+      {
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    following: [
+      {
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { versionKey: false }
 );
