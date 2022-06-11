@@ -16,6 +16,10 @@ router.get("/profile", isAuth, function (req, res, next) {
   usersController.getProfile(req, res, next);
 });
 
+router.get("/profile/:id", isAuth, checkUserId, function (req, res, next) {
+  usersController.getProfileById(req, res, next);
+});
+
 router.post("/updatePassword", isAuth, function (req, res, next) {
   usersController.updatePassword(req, res, next);
 });

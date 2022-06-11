@@ -92,6 +92,12 @@ const userController = {
     successHandle(res, currentUser);
   }),
 
+  getProfileById: handleErrorAsync(async (req, res, next) => {
+    const currentUser = await Users.findById(req.params.id);
+
+    successHandle(res, currentUser);
+  }),
+
   updatePassword: handleErrorAsync(async (req, res, next) => {
     const { password, confirmPassword } = req.body;
 
