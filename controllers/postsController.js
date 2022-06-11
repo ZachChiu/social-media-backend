@@ -42,10 +42,15 @@ const postController = {
       } else {
         successHandle(res, post);
       }
-    }).populate({
-      path: "user",
-      select: "name photo",
-    });
+    })
+      .populate({
+        path: "user",
+        select: "name photo",
+      })
+      .populate({
+        path: "comments",
+        select: "comment user",
+      });
   }),
 
   createPost: handleErrorAsync(async (req, res, next) => {
