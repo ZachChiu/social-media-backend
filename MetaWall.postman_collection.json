@@ -190,6 +190,37 @@
 					"response": []
 				},
 				{
+					"name": "取得按讚列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/posts/like_list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"like_list"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "按讚貼文",
 					"request": {
 						"method": "POST",
@@ -290,37 +321,6 @@
 					"response": []
 				},
 				{
-					"name": "取得按讚列表",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{jwt}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{url}}/posts/like_list",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"like_list"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "創建留言",
 					"request": {
 						"method": "POST",
@@ -393,7 +393,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"joyce\",\r\n    \"email\": \"joyce5@gmail.com\",\r\n    \"password\" : \"asdfg123Q\",\r\n    \"confirmPassword\": \"asdfg123Q\"\r\n}",
+							"raw": "{\r\n    \"name\": \"RAY\",\r\n    \"email\": \"ray123@gmail.com\",\r\n    \"password\" : \"asdfg123ASDF\",\r\n    \"confirmPassword\": \"asdfg123ASDF\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -448,6 +448,42 @@
 				},
 				{
 					"name": "取得個人資料",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"joyce123@gmail.com\",\r\n    \"password\": \"qsc95164\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "使用ID取得個人資料",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -560,6 +596,30 @@
 								"users",
 								"628b9bb756aedbe7aa0dce84",
 								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得追蹤名單",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/following",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"following"
 							]
 						}
 					},
