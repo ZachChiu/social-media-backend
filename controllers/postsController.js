@@ -187,6 +187,13 @@ const postController = {
         path: "user",
         select: "name photo",
       })
+      .populate({
+        path: "comments",
+        select: "comment user createdAt",
+        options: {
+          limit: 2,
+        },
+      })
       .clone();
   }),
 
