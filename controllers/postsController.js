@@ -236,7 +236,19 @@ const postController = {
       comment,
     });
 
-    successHandle(res, result);
+    const data = {
+      comment: result.comment,
+      user: {
+        name: req.user.name,
+        photo: req.user.photo,
+        _id: req.user._id,
+      },
+      post: result.post,
+      _id: result._id,
+      createdAt: result.createdAt,
+    };
+
+    successHandle(res, data);
   }),
 };
 
