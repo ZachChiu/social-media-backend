@@ -24,7 +24,10 @@ const postController = {
       })
       .populate({
         path: "comments",
-        select: "comment user",
+        select: "comment user createdAt",
+        options: {
+          limit: 2,
+        },
       })
       .sort(timeSort);
     successHandle(res, posts);
@@ -49,7 +52,7 @@ const postController = {
       })
       .populate({
         path: "comments",
-        select: "comment user",
+        select: "comment user createdAt",
       });
   }),
 
