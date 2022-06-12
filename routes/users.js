@@ -16,6 +16,10 @@ router.get("/profile", isAuth, function (req, res, next) {
   usersController.getProfile(req, res, next);
 });
 
+router.get("/following", isAuth, function (req, res, next) {
+  usersController.getFollowing(req, res, next);
+});
+
 router.get("/profile/:id", isAuth, checkUserId, function (req, res, next) {
   usersController.getProfileById(req, res, next);
 });

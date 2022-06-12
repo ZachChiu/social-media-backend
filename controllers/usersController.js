@@ -98,6 +98,19 @@ const userController = {
     successHandle(res, currentUser);
   }),
 
+  getFollowing: handleErrorAsync(async (req, res, next) => {
+    const currentUser = await Users.findById(req.user._id)
+      .populate({
+        path: "following.user",
+        select: "name photo",
+      })
+      .populate({
+        path: "followers.user",
+        select: "name photo",
+      });
+    successHandle(res, currentUser.following);
+  }),
+
   updatePassword: handleErrorAsync(async (req, res, next) => {
     const { password, confirmPassword } = req.body;
 
