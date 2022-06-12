@@ -27,6 +27,7 @@ const postController = {
         select: "comment user createdAt",
         options: {
           limit: 2,
+          sort: "-createdAt",
         },
       })
       .sort(timeSort);
