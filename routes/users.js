@@ -50,7 +50,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "http://localhost:3000/sign-in?error=login-fail",
+    failureRedirect: `${process.env.PAGE_URL}sign-in?error=login-fail`,
   }),
   function (req, res, next) {
     usersController.getGoogleData(req, res, next);
