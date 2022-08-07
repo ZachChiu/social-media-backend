@@ -8,7 +8,8 @@ const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
 const uploadRouter = require("./routes/upload");
 
-require("./connection");
+require("./connection/index");
+require("./connection/passport");
 
 process.on("uncaughtException", (err) => {
   console.error("Uncaughted Exception！");

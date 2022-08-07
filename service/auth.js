@@ -14,6 +14,20 @@ const generateJWT = (user, res) => {
   successHandle(res, userData, 201);
 };
 
+const generateUrlJWT = (user, res) => {
+  if (user == null) {
+    res.redirect(`${process.env.PAGE_URL}callback?error=login-fail"`);
+  } else {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_DAY,
+    });
+
+    res.redirect(
+      `${process.env.PAGE_URL}callback?token=${token}&name=${user.name}`
+    );
+  }
+};
+
 const isAuth = handleErrorAsync(async (req, res, next) => {
   let token = req?.headers.authorization?.startsWith("Bearer")
     ? req.headers.authorization.split(" ")[1]
@@ -37,4 +51,4 @@ const isAuth = handleErrorAsync(async (req, res, next) => {
   next();
 });
 
-module.exports = { generateJWT, isAuth };
+module.exports = { generateJWT, generateUrlJWT, isAuth };

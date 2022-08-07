@@ -3,6 +3,7 @@ const router = express.Router();
 const usersController = require("../controllers/usersController");
 const { isAuth } = require("../service/auth");
 const { checkUserId } = require("../service/checkId");
+const passport = require("passport");
 
 router.post("/sign_in", function (req, res, next) {
   usersController.signIn(req, res, next);
@@ -39,5 +40,21 @@ router.post("/:id/follow", isAuth, checkUserId, function (req, res, next) {
 router.delete("/:id/follow", isAuth, checkUserId, function (req, res, next) {
   usersController.deleteFollow(req, res, next);
 });
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: "http://localhost:3000/sign-in?error=login-fail",
+  }),
+  function (req, res, next) {
+    usersController.getGoogleData(req, res, next);
+  }
+);
 
 module.exports = router;

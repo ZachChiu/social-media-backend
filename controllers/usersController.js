@@ -2,7 +2,7 @@ const Users = require("../models/usersModel");
 const successHandle = require("../service/successHandle");
 const errorHandle = require("../service/errorHandle");
 const handleErrorAsync = require("../service/handleErrorAsync");
-const { generateJWT } = require("../service/auth");
+const { generateJWT, generateUrlJWT } = require("../service/auth");
 
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
@@ -77,6 +77,11 @@ const userController = {
     });
 
     generateJWT(newUser, res);
+  }),
+
+  getGoogleData: handleErrorAsync(async (req, res, next) => {
+    console.log("888888", req.user);
+    generateUrlJWT(req.user, res);
   }),
 
   getProfile: handleErrorAsync(async (req, res, next) => {
