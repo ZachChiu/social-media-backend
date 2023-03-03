@@ -2,7 +2,7 @@
 
 此 side project 以社群媒體為故事背景，採前後端分離。
 
-前端 [DEMO](https://zachchiu.github.io/social-media-frontend/)
+前端 [DEMO](https://social-media-mejt.onrender.com/)
 前端部分可參考 [social-media-frontend](https://github.com/ZachChiu/social-media-frontend)
 
 ### 使用技術：
