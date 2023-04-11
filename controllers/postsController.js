@@ -9,15 +9,15 @@ const validator = require("validator");
 
 const postController = {
   getPosts: handleErrorAsync(async (req, res, next) => {
-    const timeSort =
-      req?.query?.timeSort === "asc" ? "createdAt" : "-createdAt";
+    const { timeSort, content, limit, skip } = req?.query;
+    const timeSorted = timeSort === "asc" ? "createdAt" : "-createdAt";
 
     const findBySearchContent =
-      req?.query?.content != null
-        ? { content: new RegExp(req?.query?.content) }
-        : {};
+      content != null ? { content: new RegExp(content) } : {};
 
-    const posts = await Post.find(findBySearchContent)
+    const postsPromise = Post.find(findBySearchContent)
+      .skip(skip)
+      .limit(limit)
       .populate({
         path: "user",
         select: "name photo",
@@ -30,8 +30,12 @@ const postController = {
           sort: "-createdAt",
         },
       })
-      .sort(timeSort);
-    successHandle(res, posts);
+      .sort(timeSorted);
+    const countPromise = Post.count(findBySearchContent);
+
+    const [posts, count] = await Promise.all([postsPromise, countPromise]);
+
+    successHandle(res, { count, posts });
   }),
 
   getPost: handleErrorAsync(async (req, res, next) => {
@@ -165,37 +169,40 @@ const postController = {
   }),
 
   getUserPosts: handleErrorAsync(async (req, res, next) => {
-    const userId = req?.params?.id;
-    const timeSort =
-      req?.query?.timeSort === "asc" ? "createdAt" : "-createdAt";
-    const findBySearchContent =
-      req?.query?.content != null
-        ? { content: new RegExp(req?.query?.content) }
-        : {};
+    try {
+      const { timeSort, content, limit, skip } = req?.query;
 
-    await Post.find(
-      { $and: [{ user: userId }, findBySearchContent] },
-      function (err, post) {
-        if (err || !post) {
-          return next(errorHandle(400, "id 有誤", next));
-        } else {
-          successHandle(res, post);
-        }
-      }
-    )
-      .sort(timeSort)
-      .populate({
-        path: "user",
-        select: "name photo",
+      const userId = req?.params?.id;
+      const timeSorted = timeSort === "asc" ? "createdAt" : "-createdAt";
+      const findBySearchContent =
+        content != null ? { content: new RegExp(content) } : {};
+
+      const count = await Post.count({
+        $and: [{ user: userId }, findBySearchContent],
+      });
+
+      const posts = await Post.find({
+        $and: [{ user: userId }, findBySearchContent],
       })
-      .populate({
-        path: "comments",
-        select: "comment user createdAt",
-        options: {
-          limit: 2,
-        },
-      })
-      .clone();
+        .skip(skip)
+        .limit(limit)
+        .sort(timeSorted)
+        .populate({
+          path: "user",
+          select: "name photo",
+        })
+        .populate({
+          path: "comments",
+          select: "comment user createdAt",
+          options: {
+            limit: 2,
+          },
+        });
+
+      successHandle(res, { count, posts });
+    } catch (error) {
+      next(errorHandle(400, "id 有誤", next));
+    }
   }),
 
   getLikeList: handleErrorAsync(async (req, res, next) => {
